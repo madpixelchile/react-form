@@ -113,7 +113,7 @@ export class FormComponent extends Component{
 
         if(item.id === 'money'){
             
-            if(item.value.length && itemValue > 0){
+            if(item.value.length){
                 this.setState({
                     moneySuccess: true,
                 })
