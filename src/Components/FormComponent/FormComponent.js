@@ -129,13 +129,14 @@ export class FormComponent extends Component{
 
 
     formatNumber = (input)=>{
+        
         let num = input.replace(/\./g,'');
         if(!isNaN(num)){
             num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
             num = num.split('').reverse().join('').replace(/^[/.]/,'');
             input = num;
         }else{ alert('Solo se permiten numeros');
-            input = input.replace(/[^/d/.]*/g,'');
+            input = input.replace(/[^\d+*.]*/g,'');
         }
         return input;
     }
