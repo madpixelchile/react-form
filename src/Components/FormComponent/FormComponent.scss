@@ -1,0 +1,68 @@
+
+
+*{
+    outline: none;
+}
+
+.main-cont{
+    padding: 20px;
+}
+
+.btn{
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    &--primary{
+        background: #9898ff;
+        color: white; 
+    }
+}
+
+form{
+    > *{
+        display: block;
+        + *{
+            margin-top: 5px;
+        }
+    }
+}
+
+input{
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 1px #ccc;
+    + label, + button{
+        margin-top: 10px;
+    }
+}
+
+
+.input{
+    border: solid 1px #ccc;
+    transition: all 300ms ease;
+    &--success{
+        border: solid 1px #a5d8a5;
+        transition: all 300ms ease;
+    }
+
+    &--error{
+        border: solid 1px #ff9999;
+        transition: all 300ms ease;
+    }
+}
+
+
+.alert{
+    
+    border-radius: 10px;
+    padding: 20px;
+
+    &--error{
+        background: #ffd3d3;
+    }
+
+    &--success{
+        background: #d4ffd3;
+    }
+
+}
