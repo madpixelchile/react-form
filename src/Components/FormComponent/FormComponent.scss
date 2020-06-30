@@ -8,6 +8,10 @@
     padding: 20px;
 }
 
+label {
+    font-size: 12px;
+}
+
 .btn{
     border: none;
     padding: 10px 20px;
@@ -65,4 +69,17 @@ input{
         background: #d4ffd3;
     }
 
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

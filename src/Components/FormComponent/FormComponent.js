@@ -43,6 +43,8 @@ export class FormComponent extends Component{
             nameValue: '',
             nameSuccess: false,
             rutValue: '',
+            moneyValue: '',
+            moneySuccess: false,
             formSuccess: false,
         }
         
@@ -55,7 +57,9 @@ export class FormComponent extends Component{
             submitState: true,
         });
 
-        if(this.state.nameSuccess){ //If all cases are successfull form success is toke
+        //If all cases are successfull form success is toke
+
+        if(this.state.nameSuccess){ 
             
             this.setState({
                 formSuccess: true,
@@ -69,7 +73,9 @@ export class FormComponent extends Component{
 
     }
 
-    onKeyUpBehaviours = (e)=>{ //Validate all inputs on key up
+    //Validate all inputs on key up
+
+    onKeyUpBehaviours = (e)=>{ 
         let item = e.currentTarget;
         let itemValue = item.value;
 
@@ -91,7 +97,7 @@ export class FormComponent extends Component{
 
         if(item.id === 'rut'){
             
-            if(item.value.length && this.validaRut(itemValue)){
+            if(item.value.length && this.validateRut(itemValue)){
                 this.setState({
                     rutSuccess: true,
                 })
@@ -103,7 +109,37 @@ export class FormComponent extends Component{
 
         }
 
+        //Money input
+
+        if(item.id === 'money' && itemValue > 0){
+            
+            if(item.value.length){
+                this.setState({
+                    moneySuccess: true,
+                })
+            }else{
+                this.setState({
+                    moneySuccess: false,
+                })
+            }
+
+        }
+
     }
+
+
+    formatNumber = (input)=>{
+        let num = input.replace(/\./g,'');
+        if(!isNaN(num)){
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[/.]/,'');
+            input = num;
+        }else{ alert('Solo se permiten numeros');
+            input = input.replace(/[^/d/.]*/g,'');
+        }
+        return input;
+    }
+
 
     //Format rut text number
     formatRut = (rut)=>{
@@ -132,7 +168,7 @@ export class FormComponent extends Component{
     }
 
     //Validate rut
-    validaRut =(cRut)=> {
+    validateRut =(cRut)=> {
 
         // cRut = cRut.replace(/[\.-]/g, "");
         cRut = cRut.replace(/[/.-]/g, "");
@@ -169,9 +205,12 @@ export class FormComponent extends Component{
 
 
 
+
+
+
     render(){
 
-        const {nameSuccess, nameValue, submitState, rutValue, rutSuccess} = this.state;
+        const {nameSuccess, nameValue, submitState, rutValue, rutSuccess, moneyValue, moneySuccess} = this.state;
 
         return(
             
@@ -221,6 +260,26 @@ export class FormComponent extends Component{
                         placeholder={`Ingresa tu rut aquí`}
                         value={rutValue}
                     />
+
+                    
+                    <label htmlFor={'money'}>Sueldo bruto mensual</label>
+                    <input 
+                        id={'money'}
+                        className={
+                            submitState ? 
+                                moneySuccess ? 'input--success' : 'input--error' 
+                            : '' 
+                        } 
+                        name={'money'}
+                        type={'text'}
+                        placeholder={'Ingresa tu sueldo aquí'}
+                        onKeyUp={this.onKeyUpBehaviours}
+
+                        onChange={ e => this.setState({moneyValue: this.formatNumber(e.target.value)})}
+                        value={moneyValue}
+
+                    />
+
 
                     <button className={`btn btn--primary`}>Submit</button>
 
