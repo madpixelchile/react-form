@@ -43,8 +43,10 @@ export class FormComponent extends Component{
             nameValue: '',
             nameSuccess: false,
             rutValue: '',
+            rutSuccess: false,
             moneyValue: '',
             moneySuccess: false,
+            termsSuccess: false,
             formSuccess: false,
         }
         
@@ -59,7 +61,7 @@ export class FormComponent extends Component{
 
         //If all cases are successfull form success is toke
 
-        if(this.state.nameSuccess){ 
+        if(this.state.nameSuccess && this.state.rutSuccess && this.state.moneySuccess && this.state.termsSuccess){ 
             
             this.setState({
                 formSuccess: true,
@@ -125,6 +127,21 @@ export class FormComponent extends Component{
 
         }
 
+    }
+
+    checkBoxBehaviours = (e)=>{
+        let item = e.currentTarget;
+        if(item.id === 'terms'){
+            if(item.checked){
+                this.setState({
+                    termsSuccess: true,
+                });
+            }else{
+                this.setState({
+                    termsSuccess: false,
+                });
+            }
+        }
     }
 
 
@@ -213,7 +230,7 @@ export class FormComponent extends Component{
 
     render(){
 
-        const {nameSuccess, nameValue, submitState, rutValue, rutSuccess, moneyValue, moneySuccess} = this.state;
+        const {nameSuccess, nameValue, submitState, rutValue, rutSuccess, moneyValue, moneySuccess, termsSuccess} = this.state;
 
         return(
             
@@ -282,6 +299,39 @@ export class FormComponent extends Component{
                         value={moneyValue}
 
                     />
+
+                    <label 
+                        className={`
+                            field field--checkbox
+                            ${
+                                submitState ? 
+                                    termsSuccess ? 
+                                        '' 
+                                    : 
+                                        'field--checkbox--error'
+                                : ''
+                            }
+                        `}
+                        htmlFor={'terms'}
+                    >
+                        <input 
+                            id={'terms'} 
+                            name={'terms'} 
+                            type={'checkbox'} 
+                            onChange={this.checkBoxBehaviours}
+                        />
+                        <div className={'custom-check'}></div>
+                        <span>Acepto los términos y condiciones</span>
+                    </label>
+
+                    {
+                        submitState ? 
+                            termsSuccess ? 
+                                '' 
+                            : 
+                                <span className={'text-alert'}>Debes aceptar los terminos y condiciones para continuar</span>
+                        : ''
+                    }
 
 
                     <button className={`btn btn--primary`}>Submit</button>
