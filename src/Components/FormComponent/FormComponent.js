@@ -111,9 +111,9 @@ export class FormComponent extends Component{
 
         //Money input
 
-        if(item.id === 'money' && itemValue > 0){
+        if(item.id === 'money'){
             
-            if(item.value.length){
+            if(item.value.length && itemValue > 0){
                 this.setState({
                     moneySuccess: true,
                 })
@@ -129,8 +129,10 @@ export class FormComponent extends Component{
 
 
     formatNumber = (input)=>{
-        
+        var valor = input.replace(/^0*/, '');
+        input = valor;
         let num = input.replace(/\./g,'');
+
         if(!isNaN(num)){
             num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
             num = num.split('').reverse().join('').replace(/^[/.]/,'');
