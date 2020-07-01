@@ -384,7 +384,7 @@ export class FormComponent extends Component{
                     </div>
 
 
-                    <label>Contraseña y confirmación de contraseña (6 dígitos)</label>
+                    <label>Contraseña y confirmación de contraseña (máximo 6 dígitos)</label>
 
                     <div className={'field field--match'}>
                         <input 
@@ -397,7 +397,7 @@ export class FormComponent extends Component{
                             type={'password'} 
                             maxLength={'6'}
                             onKeyUp={this.onKeyUpBehaviours}
-                            onChange={ e => this.setState({passwordOne: this.formatPhone(e.target.value)})}
+                            onChange={ e => this.setState({passwordOne: e.target.value})}
                         />
                         <input 
                             className={
@@ -409,7 +409,7 @@ export class FormComponent extends Component{
                             type={'password'} 
                             maxLength={'6'}
                             onKeyUp={this.onKeyUpBehaviours}
-                            onChange={ e => this.setState({passwordTwo: this.formatPhone(e.target.value)})}
+                            onChange={ e => this.setState({passwordTwo: e.target.value })}
                         />
                     </div>
                     {
@@ -450,7 +450,7 @@ export class FormComponent extends Component{
                             termsSuccess ? 
                                 '' 
                             : 
-                                <span className={'text-alert'}>Debes aceptar los terminos y condiciones para continuar</span>
+                                <span className={'text-alert'}>Debes aceptar los términos y condiciones para continuar</span>
                         : ''
                     }
 
