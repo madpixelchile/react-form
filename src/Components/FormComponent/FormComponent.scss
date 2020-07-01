@@ -38,8 +38,17 @@ input{
     padding: 10px;
     border-radius: 6px;
     border: solid 1px #ccc;
+
+    transition: all 300ms ease;
+
     + label, + button{
         margin-top: 10px;
+    }
+
+    &:focus{
+        border-color: #9898ff;
+
+        transition: all 300ms ease;
     }
 }
 
@@ -60,7 +69,7 @@ input{
 
 
 .alert{
-    
+    display: table;
     border-radius: 10px;
     padding: 20px;
 
@@ -131,6 +140,29 @@ input[type=number] {
             }
         }
     }
+
+    &--match {
+        display: flex;
+        align-items: center;
+        input {
+            max-width: 100px;
+            + input{
+                margin-left: 10px;
+            }
+        }
+    }
+
+    &--prefix{
+        display: flex;
+        align-items: center;
+
+        span{
+            font-size: 12px;
+            + input{
+                margin-left: 5px;
+            }
+        }
+    }
 }
 
 .text-alert{
@@ -140,4 +172,8 @@ input[type=number] {
     display: table;
     padding: 6px 10px;
     border-radius: 6px;
+    &--success{
+        background: #d4ffd3;
+        color: #62d062;
+    }
 }

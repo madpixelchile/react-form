@@ -39,14 +39,21 @@ export class FormComponent extends Component{
         super();
 
         this.state = {
-            submitState: false,
             nameValue: '',
             nameSuccess: false,
             rutValue: '',
             rutSuccess: false,
             moneyValue: '',
             moneySuccess: false,
+            phoneValue: '',
+            phoneSuccess: false,
             termsSuccess: false,
+
+            passwordOne: '',
+            passwordTwo: '',
+            passwordSuccess: false,
+            
+            submitState: false,
             formSuccess: false,
         }
         
@@ -61,7 +68,7 @@ export class FormComponent extends Component{
 
         //If all cases are successfull form success is toke
 
-        if(this.state.nameSuccess && this.state.rutSuccess && this.state.moneySuccess && this.state.termsSuccess){ 
+        if(this.state.nameSuccess && this.state.rutSuccess && this.state.moneySuccess && this.state.termsSuccess && this.state.phoneSuccess && this.state.passwordSuccess){ 
             
             this.setState({
                 formSuccess: true,
@@ -127,6 +134,38 @@ export class FormComponent extends Component{
 
         }
 
+        //Phone input
+
+        if(item.id === 'phone'){
+            
+            if(item.value.length){
+                this.setState({
+                    phoneSuccess: true,
+                })
+            }else{
+                this.setState({
+                    phoneSuccess: false,
+                })
+            }
+
+        }
+
+        //Password match
+
+        if(item.id === 'password-1' || item.id === 'password-2'){
+
+            if(itemValue.length && this.state.passwordOne === this.state.passwordTwo ){
+                this.setState({
+                    passwordSuccess: true,
+                })
+            }else{
+                this.setState({
+                    passwordSuccess: false,
+                })
+            }
+
+        }
+
     }
 
     checkBoxBehaviours = (e)=>{
@@ -144,6 +183,15 @@ export class FormComponent extends Component{
         }
     }
 
+    formatPhone = (input)=>{
+        let num = input.replace(/\./g,'');
+        if(!isNaN(num)){
+            input = num;
+        }else{ alert('Solo se permiten numeros');
+            input = input.replace(/[^\d+*.]*/g,'');
+        }
+        return input;
+    }
 
     formatNumber = (input)=>{
         var valor = input.replace(/^0*/, '');
@@ -230,7 +278,19 @@ export class FormComponent extends Component{
 
     render(){
 
-        const {nameSuccess, nameValue, submitState, rutValue, rutSuccess, moneyValue, moneySuccess, termsSuccess} = this.state;
+        const {
+            nameSuccess,
+            nameValue,
+            submitState,
+            rutValue,
+            rutSuccess,
+            moneyValue,
+            moneySuccess,
+            termsSuccess,
+            phoneValue,
+            phoneSuccess,
+            passwordSuccess,
+        } = this.state;
 
         return(
             
@@ -299,6 +359,67 @@ export class FormComponent extends Component{
                         value={moneyValue}
 
                     />
+
+
+                    <label htmlFor={'phone'}>Teléfono</label>
+
+                    <div className={'field field--prefix'}>
+                        <span>+56 9</span>
+                        <input 
+                            id={'phone'}
+                            name={'phone'}
+                            className={
+                                submitState ? 
+                                    phoneSuccess ? 'input--success' : 'input--error' 
+                                : '' 
+                            } 
+                            type={'text'} 
+                            placeholder={'ej: 78953030'}
+                            maxLength={'8'}
+
+                            onKeyUp={this.onKeyUpBehaviours}
+                            onChange={ e => this.setState({phoneValue: this.formatPhone(e.target.value)})}
+                            value={phoneValue}
+                        />
+                    </div>
+
+
+                    <label>Contraseña y confirmación de contraseña (6 dígitos)</label>
+
+                    <div className={'field field--match'}>
+                        <input 
+                            className={
+                                submitState ? 
+                                    passwordSuccess ? 'input--success' : 'input--error' 
+                                : '' 
+                            } 
+                            id={'password-1'}
+                            type={'password'} 
+                            maxLength={'6'}
+                            onKeyUp={this.onKeyUpBehaviours}
+                            onChange={ e => this.setState({passwordOne: this.formatPhone(e.target.value)})}
+                        />
+                        <input 
+                            className={
+                                submitState ? 
+                                    passwordSuccess ? 'input--success' : 'input--error' 
+                                : '' 
+                            } 
+                            id={'password-2'}
+                            type={'password'} 
+                            maxLength={'6'}
+                            onKeyUp={this.onKeyUpBehaviours}
+                            onChange={ e => this.setState({passwordTwo: this.formatPhone(e.target.value)})}
+                        />
+                    </div>
+                    {
+                        submitState ? 
+                            passwordSuccess ? 
+                                <span className={'text-alert text-alert--success'}>La contraseña coincide en ambos campos</span>
+                            : 
+                                <span className={'text-alert'}>La contraseña debe de ser la misma en ambos campos</span>
+                        : ''
+                    }
 
                     <label 
                         className={`
